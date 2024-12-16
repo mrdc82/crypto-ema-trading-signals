@@ -58,7 +58,7 @@ def send_to_influxdb(data):
 
 def main():
     global symbol
-    top10 = ['BTC/USDT','ETH/USDT','XRP/USDT']
+    top10 = ['BTC/USDT','ETH/USDT','XRP/USDT','SOL/USDT','BNB/USDT','DOGE/USDT','ADA/USDT','TRX/USDT','AVAX/USDT']
     #symbol = 'BTC/USDT'
     timeframe = '1m'
     i = 0
@@ -71,10 +71,10 @@ def main():
                 data_with_signals = check_signals(data)
                 send_to_influxdb(data_with_signals)
                 #time.sleep(60 * 60 * 24)  # Wait for the next daily candlestick
-                time.sleep(5)
+                time.sleep(60)
             except Exception as e:
                 print(f"Error: {e}")
-                time.sleep(5)
+                time.sleep(60)
             i = i+1
         elif i == len(top10):
             i = 0
