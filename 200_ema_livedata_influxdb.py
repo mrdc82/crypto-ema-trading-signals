@@ -71,11 +71,13 @@ def main():
                 data_with_signals = check_signals(data)
                 send_to_influxdb(data_with_signals)
                 #time.sleep(60 * 60 * 24)  # Wait for the next daily candlestick
-                time.sleep(10)
+                time.sleep(5)
             except Exception as e:
                 print(f"Error: {e}")
-                time.sleep(10)
-        i = i+1
+                time.sleep(5)
+            i = i+1
+        elif i == len(top10):
+            i = 0
 
 if __name__ == "__main__":
     main()
