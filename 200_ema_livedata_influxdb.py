@@ -48,7 +48,7 @@ def send_to_influxdb(data):
     """
     latest = data.iloc[-1]
     point = Point("trading_signals") \
-        .tag("symbol", "BTC/USDT") \
+        .tag("symbol", symbol) \
         .field("Close", float(latest['Close'])) \
         .field("Touch_200_EMA", int(latest['Touch_200_EMA'])) \
         .field("EMA_Cross_Signal", int(latest['EMA_Cross_Signal'])) \
@@ -57,19 +57,25 @@ def send_to_influxdb(data):
     print(f"Sent data to InfluxDB: {point}")
 
 def main():
-    symbol = 'BTC/USDT'
+    global symbol
+    top10 = ['BTC/USDT','ETH/USDT','XRP/USDT']
+    #symbol = 'BTC/USDT'
     timeframe = '1m'
+    i = 0
     while True:
-        try:
-            print("Fetching data...")
-            data = fetch_binance_data(symbol, timeframe)
-            data_with_signals = check_signals(data)
-            send_to_influxdb(data_with_signals)
-            #time.sleep(60 * 60 * 24)  # Wait for the next daily candlestick
-            time.sleep(60)
-        except Exception as e:
-            print(f"Error: {e}")
-            time.sleep(60)
+        if i < len(top10):
+            symbol = top10[i]
+            try:
+                print("Fetching data...")
+                data = fetch_binance_data(symbol, timeframe)
+                data_with_signals = check_signals(data)
+                send_to_influxdb(data_with_signals)
+                #time.sleep(60 * 60 * 24)  # Wait for the next daily candlestick
+                time.sleep(10)
+            except Exception as e:
+                print(f"Error: {e}")
+                time.sleep(10)
+        i = i+1
 
 if __name__ == "__main__":
     main()
