@@ -58,7 +58,7 @@ This repository contains Python scripts for monitoring cryptocurrency prices and
 
 1. Run the script to monitor cryptocurrencies:
    ```bash
-   python monitor.py
+   python 200_ema_livedata_influxdb.py
    ```
 
 2. Monitor the logs for alerts about EMA crossovers:
